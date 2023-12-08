@@ -22,14 +22,14 @@ jobs:
           
     - name: path
       run: |
-        cd /home/ubuntu/actions-runner/_work/gglsbl-rest/gglsbl-rest
+        cd --path-to-the-reposetory-inside-__work dir--
 
     - name: Build Image
       run: |
-        export v=public.ecr.aws/k9r7a4r9/ttd
+        export v=--public-ecr-repo-url--
         docker buildx build -t $v -f dockerfile .      
     
     - name: Push Image
       run: |
-        export v=public.ecr.aws/k9r7a4r9/ttd
+        export v=--public-ecr-repo-url--
         docker push $v:latest
