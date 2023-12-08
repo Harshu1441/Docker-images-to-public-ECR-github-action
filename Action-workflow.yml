@@ -1,0 +1,35 @@
+name: Image to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build-tag-and-push:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+          mask-password: 'true'
+          
+    - name: path
+      run: |
+        cd /home/ubuntu/actions-runner/_work/gglsbl-rest/gglsbl-rest
+
+    - name: Build Image
+      run: |
+        export v=public.ecr.aws/k9r7a4r9/ttd
+        docker buildx build -t $v -f dockerfile .      
+    
+    - name: Push Image
+      run: |
+        export v=public.ecr.aws/k9r7a4r9/ttd
+        docker push $v:latest
